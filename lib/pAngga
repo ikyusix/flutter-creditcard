@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+void main() =>
+    runApp(
+        FirstScreen()); // it run a function (anonimus func) called materialapp
+
+// stateful memiliki method setState di mana dapat emmberitahu kepada UI ketika ada perubahan data, jika stateless, di astatic jd ketika ad aperubahan data, UI tidak akan berubah
+class FirstScreen extends StatefulWidget {
+  // di stateful hanya memiliki state, shgg utk membuild, state hrs dibuat // hanya return state
+
+  @override
+  State<StatefulWidget> createState() {
+    // Stateful hanya mereturn, krn dia hanya membuat state dan state yg memiliki buildnya ada di class lain
+    return FirstScreenState();
+  }
+}
+
+class FirstScreenState extends State {
+  var message = "Your Text";
+  List<String> listMessage = List<String>();
+  var clearTextField = TextEditingController();
+
+  handleInputText(text) {
+    setState(() {
+      this.message = text;
+    });
+    print(this.message);
+  }
+
+  addMessage() {
+    setState(() {
+      this.listMessage.add(message);
+    });
+    clearTextField.clear();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          title: Text("MY FIRST APP"),
+          backgroundColor: Colors.black,
+        ),
+        body: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(child: TextField(
+                  controller: clearTextField,
+                  onChanged: handleInputText,),),
+                RaisedButton(child: Icon(Icons.send),
+                  onPressed: addMessage,),
+              ],
+            ),
+            Expanded(
+                child: ListView.builder(
+                  itemCount: listMessage.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 50,
+                      color: Colors.lightBlue,
+                      child: Center(child: Text(listMessage[index]),),
+
+                    Center(
+                    child: Text(listCard[index]),
+                    );
+                  },
+                )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
